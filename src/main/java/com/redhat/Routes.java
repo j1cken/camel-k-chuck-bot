@@ -4,12 +4,15 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.telegram.TelegramConstants;
 import org.apache.camel.component.telegram.TelegramParseMode;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 public class Routes extends RouteBuilder {
+
     public void configure() {
 
         // Take all messages that are sent to our BOT
-        from("telegram:bots/{{token}}")
+        from("telegram:bots/{{env:TOKEN}}")
                 // Just focus on the textual message
                 .convertBodyTo(String.class)
                 .choice()
@@ -44,7 +47,7 @@ public class Routes extends RouteBuilder {
                 // Source is HTML encoded, so we tell the Telegram component we are sending HTML encoded data
                 .setHeader(TelegramConstants.TELEGRAM_PARSE_MODE, constant(TelegramParseMode.HTML))
                 // Send the quote back to the same chat (CamelTelegramChatId header is implicitly used)
-                .to("telegram:bots/{{token}}");
+                .to("telegram:bots/{{env:TOKEN}}");
 
 
     }
