@@ -1,3 +1,5 @@
+package com.redhat;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.telegram.TelegramConstants;
 import org.apache.camel.component.telegram.TelegramParseMode;
